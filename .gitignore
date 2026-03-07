@@ -1,2 +1,4 @@
 .idea
 .env
+core-data
+core/config.json
