@@ -10,6 +10,8 @@ from task.tools.base import BaseTool
 from task.tools.files.file_content_extraction_tool import FileContentExtractionTool
 from task.tools.mcp.mcp_client import MCPClient
 from task.tools.mcp.mcp_tool import MCPTool
+from task.tools.rag.document_cache import DocumentCache
+from task.tools.rag.rag_tool import RagTool
 
 DIAL_ENDPOINT = os.getenv("DIAL_ENDPOINT", "http://localhost:8080")
 DEPLOYMENT_NAME = os.getenv("DEPLOYMENT_NAME", "gpt-4o")
@@ -40,6 +42,7 @@ class GeneralPurposeAgentApplication(ChatCompletion):
         # 3. Add FileContentExtractionTool
         tools.append(FileContentExtractionTool(DIAL_ENDPOINT))
         # 4. Add RagTool
+        tools.append(RagTool(DIAL_ENDPOINT, DEPLOYMENT_NAME, DocumentCache.create()))
         # 5. Add PythonCodeInterpreterTool
         # 6. Extend with MCP tools from localhost:8051
         return tools
