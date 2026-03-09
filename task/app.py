@@ -7,6 +7,7 @@ from aidial_sdk.chat_completion import ChatCompletion, Request, Response
 from task.agent import GeneralPurposeAgent
 from task.prompts import SYSTEM_PROMPT
 from task.tools.base import BaseTool
+from task.tools.deployment.image_generation_tool import ImageGenerationTool
 from task.tools.files.file_content_extraction_tool import FileContentExtractionTool
 from task.tools.mcp.mcp_client import MCPClient
 from task.tools.mcp.mcp_tool import MCPTool
@@ -39,6 +40,7 @@ class GeneralPurposeAgentApplication(ChatCompletion):
         # 1. Create list of BaseTool
         tools: list[BaseTool] = []
         # 2. Add ImageGenerationTool
+        tools.append(ImageGenerationTool(endpoint=DIAL_ENDPOINT))
         # 3. Add FileContentExtractionTool
         tools.append(FileContentExtractionTool(DIAL_ENDPOINT))
         # 4. Add RagTool
