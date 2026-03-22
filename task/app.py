@@ -11,6 +11,7 @@ from task.tools.deployment.image_generation_tool import ImageGenerationTool
 from task.tools.files.file_content_extraction_tool import FileContentExtractionTool
 from task.tools.mcp.mcp_client import MCPClient
 from task.tools.mcp.mcp_tool import MCPTool
+from task.tools.py_interpreter.python_code_interpreter_tool import PythonCodeInterpreterTool
 from task.tools.rag.document_cache import DocumentCache
 from task.tools.rag.rag_tool import RagTool
 
@@ -46,6 +47,12 @@ class GeneralPurposeAgentApplication(ChatCompletion):
         # 4. Add RagTool
         tools.append(RagTool(DIAL_ENDPOINT, DEPLOYMENT_NAME, DocumentCache.create()))
         # 5. Add PythonCodeInterpreterTool
+        python_interpreter_tool = await PythonCodeInterpreterTool.create(
+            mcp_url="http://localhost:8050/mcp",
+            tool_name="execute_code",
+            dial_endpoint=DIAL_ENDPOINT
+        )
+        tools.append(python_interpreter_tool)
         # 6. Extend with MCP tools from localhost:8051
         mcp_tools = await self._get_mcp_tools("http://localhost:8051/mcp/")
         tools.extend(mcp_tools)
