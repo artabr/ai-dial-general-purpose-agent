@@ -47,6 +47,8 @@ class GeneralPurposeAgentApplication(ChatCompletion):
         tools.append(RagTool(DIAL_ENDPOINT, DEPLOYMENT_NAME, DocumentCache.create()))
         # 5. Add PythonCodeInterpreterTool
         # 6. Extend with MCP tools from localhost:8051
+        mcp_tools = await self._get_mcp_tools("http://localhost:8051/mcp/")
+        tools.extend(mcp_tools)
         return tools
 
     async def chat_completion(self, request: Request, response: Response) -> None:
