@@ -26,7 +26,7 @@ class ImageGenerationTool(DeploymentTool):
 
     @property
     def deployment_name(self) -> str:
-        return "dall-e-3"
+        return "gpt-image-1-mini-2025-10-06"
 
     @property
     def name(self) -> str:
@@ -35,11 +35,11 @@ class ImageGenerationTool(DeploymentTool):
     @property
     def description(self) -> str:
         return (
-            "Generates an image using DALL-E 3 based on a text description. "
+            "Generates an image using GPT Image-1 Mini based on a text description. "
             "Use this tool when the user requests image creation, illustration, or visual content generation. "
             "The generated image will be displayed directly in the chat. "
             "Provide a detailed, descriptive prompt for best results. "
-            "Note: DALL-E 3 does not support editing existing images, only generating new ones."
+            "Note: GPT Image-1 Mini does not support editing existing images, only generating new ones."
         )
 
     @property
@@ -54,20 +54,14 @@ class ImageGenerationTool(DeploymentTool):
                 "size": {
                     "type": "string",
                     "description": "The size of the generated image.",
-                    "enum": ["1024x1024", "1792x1024", "1024x1792"],
+                    "enum": ["1024x1024", "1024x1536", "1536x1024", "auto"],
                     "default": "1024x1024"
                 },
                 "quality": {
                     "type": "string",
                     "description": "The quality of the generated image.",
-                    "enum": ["standard", "hd"],
-                    "default": "standard"
-                },
-                "style": {
-                    "type": "string",
-                    "description": "The style of the generated image.",
-                    "enum": ["vivid", "natural"],
-                    "default": "natural"
+                    "enum": ["low", "medium", "high", "auto"],
+                    "default": "medium"
                 },
             },
             "required": ["prompt"],
